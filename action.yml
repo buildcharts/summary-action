@@ -1,0 +1,16 @@
+# .github/actions/summary/action.yml
+name: Generate BuildCharts summary
+description: Runs `buildcharts summary`
+branding:
+  icon: 'pie-chart'
+  color: 'yellow'
+runs:
+  using: composite
+  steps:
+    - name: BuildCharts Summary
+      shell: bash
+      run: |
+
+        echo "::group::buildcharts summary"
+        buildcharts summary
+        echo "::endgroup::"

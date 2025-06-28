@@ -1,0 +1,28 @@
+# .github/actions/summary/action.yml
+name: Generate BuildCharts summary
+description: Runs `buildcharts summary` with the dotnet-CLI
+branding:
+  icon: 'pie-chart'
+  color: 'yellow'
+runs:
+  using: composite
+  steps:
+    - name: BuildCharts Summary
+      shell: bash
+      run: |
+        set -euo pipefail
+
+        echo "::group::buildcharts install CLI"
+        dotnet tool install --global dotnet-buildcharts --add-source ./.buildcharts/output/nuget --prerelease \
+          || dotnet tool install --global dotnet-buildcharts
+        echo "::endgroup::"
+
+        echo "::group::buildcharts version"
+        buildcharts version
+        echo "::endgroup::"
+
+        echo "::group::buildcharts summary"
+        buildcharts summary
+        echo "::endgroup::"
+
+        true
